@@ -1,0 +1,1 @@
+spark-submit --deploy-mode client --master yarn wordcount.py s3://hail-data-sse/texas-data/texas_data_dictionary.csv s3://hail-dickm-emr/data/output01.txt
