@@ -22,9 +22,24 @@ Once the listed pre-requistes are complete, you need to complete the following t
     d. Spark. We used version 2.2.1
 3. Configure SPARK\_HOME in .bash_profile to point to directory with Spark
 4. Copy the configuration files from the pre-requisite steps (from S3) to SPARK_HOME/conf. You may want to back up the old dir.
-5. Set HADOOP\_CONFIG\_DIR to the SPARK\_HOME/conf
+5. Set HADOOP\_CONFIG\_DIR to the $SPARK\_HOME/conf
+6. Set JAVA\_HOME in `$HADOOP\_CONF\_DIR/hadoop-env.sh`.
+7. Set HADOOP\_USER\_NAME to _hadoop_ (default user on EMR clusters). You can see [Runing Spark on YARN](https://spark.apache.org/docs/2.1.1/running-on-yarn.html) for more details.
+
+
+### Set up native access to S3
+1. Follow instrucitons in this [install guide for hadoop 2.6](http://www.rexamine.com/2015/02/installing-hadoop-2-6-0-on-centos-7/) to set up hadoop client on EC2
+2. Update entries in bash\_profile so that HADOOP\_CONF\_DIR is set to SPARK\_HOME/conf
+3. Update the classpath for hadoop [to include hadoop-aws-[version].jar](https://stackoverflow.com/questions/28029134/how-can-i-access-s3-s3n-from-a-local-hadoop-2-6-installation)
+
+
+
+### Known issues
+__*Unknow option -9, JVM*__
+If you get an error with verbiage about, you should check that the HADOOP_OPTS variable is valid in `HADOOP\_CONF\_DIR/hadoop-env.sh`. I just replaced the spark one with the options in the orignal tar ball.
 
 __*Validate Spark can hit EMR*__
+Validate using hadoop command `hadoop fs -ls /`. *If you get a list of directories and no errors it worked*
 
 _TO DO_
 
